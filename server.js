@@ -6,6 +6,7 @@ const app = express();
 const args = (process.argv.slice(2))
 const port = args.port || 5000
 const server = app.listen(port)
+let trueOutput = ""
 
 //let output = roll(sides, dice, rolls)
 //console.log(JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output}))  
@@ -13,12 +14,18 @@ const server = app.listen(port)
 
 
   app.get('/app/roll/:sides?/:dice?/:rolls?', (req, res) => {
-    const sides = Number(req.query.sides) || 6
-    const dice = Number(req.query.dice) || 2
-    const rolls = Number(req.query.rolls) || 1
+    const sides = Number(req.params.sides) || Number(req.query.sides) || 6
+    const dice = Number(req.params.dice) || Number(req.query.dice) || 2
+    const rolls = Number(req.params.rolls) || Number(req.query.rolls) || 1
     let output = roll(sides, dice, rolls)
-    let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
+    trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
     res.status(200).send(trueOutput);
+    server.close()
+    process.exit()
+  })
+
+  app.get('/app', (req, res) => {
+    res.status(200)
     server.close()
     process.exit()
   })
