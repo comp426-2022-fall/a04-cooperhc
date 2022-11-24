@@ -5,7 +5,6 @@ import minimist from 'minimist'
 const app = express();
 const args = minimist(process.argv.slice(2))
 const port = args.port || 5000
-let trueOutput = ""
 
 //let output = roll(sides, dice, rolls)
 //console.log(JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output}))  
@@ -17,7 +16,7 @@ let trueOutput = ""
     const dice = Number(req.params.dice) || Number(req.query.dice) || 2
     const rolls = Number(req.params.rolls) || Number(req.query.rolls) || 1
     let output = roll(sides, dice, rolls)
-    trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
+    let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
     res.status(200).send(trueOutput)
     server.close()
     process.exit()
@@ -25,12 +24,12 @@ let trueOutput = ""
   })
 
   app.get('/app', (req, res) => {
-    res.sendStatus(200)
+    res.status(200).send("200 OK")
     server.close()
     process.exit()
   })
 
-  app.get('/', (req, res) => {
+  app.use((req, res) => {
     res.status(404).send("404 NOT FOUND")
     server.close()
     process.exit()
