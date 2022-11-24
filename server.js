@@ -5,7 +5,7 @@ import minimist from 'minimist'
 const app = express();
 const args = (process.argv.slice(2))
 const port = args.port || 5000
-
+const server = app.listen(port)
 
 //let output = roll(sides, dice, rolls)
 //console.log(JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output}))  
@@ -19,7 +19,9 @@ const port = args.port || 5000
     let output = roll(sides, dice, rolls)
     let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
     res.status(200).send(trueOutput);
-  }).listen(port)
+    server.close()
+    process.exit()
+  })
 
   //app.get('/app', (req, res) => {
     
@@ -27,4 +29,4 @@ const port = args.port || 5000
 
 
 
-  console.log(`Server listening on port ${port}`);
+  //console.log(`Server listening on port ${port}`);
