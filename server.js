@@ -12,6 +12,7 @@ const port = args.port || 5000
 app.use(express.json())
   
   app.get('/app/roll/:sides?/:dice?/:rolls?', (req, res) => {
+
     const sides = Number(req.params.sides) || Number(req.query.sides) || 6
     const dice = Number(req.params.dice) || Number(req.query.dice) || 2
     const rolls = Number(req.params.rolls) || Number(req.query.rolls) || 1
@@ -35,9 +36,19 @@ app.use(express.json())
     process.exit()
   })
 
+  //
+  app.get('/app/:bad_endpoint', (req, res) => {
+    res.status(404).send("404 NOT FOUND")
+    server.close()
+    process.exit()
+  })
+  //
+
+  
+
   
   app.use((req, res) => {
-    if(req.body.sides != null){
+    //if(req.body.sides != null){
       let sides = 6
       let dice = 2
       let rolls = 1
@@ -48,8 +59,8 @@ app.use(express.json())
       }
       let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": LOL})
       res.status(200).send(trueOutput)
-    }
-    res.status(404).send("404 NOT FOUND")
+    //}
+    //res.status(404).send("404 NOT FOUND")
     server.close()
     process.exit()
   })
