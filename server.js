@@ -57,7 +57,7 @@ app.use(express.json())
       for(let i = 0; i < output.length; i++){
       xdd += output[i]
       }
-      let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": xdd})
+      let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": [xdd]})
       res.status(200).send(trueOutput)
     //}
     //res.status(404).send("404 NOT FOUND")
