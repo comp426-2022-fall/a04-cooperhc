@@ -9,12 +9,13 @@ const port = args.port || 5000
 //let output = roll(sides, dice, rolls)
 //console.log(JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output}))  
 
-
-
+app.use(express.json())
+  
   app.get('/app/roll/:sides?/:dice?/:rolls?', (req, res) => {
     const sides = Number(req.params.sides) || Number(req.query.sides) || 6
     const dice = Number(req.params.dice) || Number(req.query.dice) || 2
     const rolls = Number(req.params.rolls) || Number(req.query.rolls) || 1
+
     let output = roll(sides, dice, rolls)
     let xdd = 0
     for(let i = 0; i < output.length; i++){
@@ -34,7 +35,20 @@ const port = args.port || 5000
     process.exit()
   })
 
+  
   app.use((req, res) => {
+    if(req.body.sides != null){
+      let sides = 6
+      let dice = 2
+      let rolls = 1
+      let output = roll(sides, dice, rolls)
+      let xdd = 0
+      for(let i = 0; i < output.length; i++){
+      xdd += output[i]
+      }
+      let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": LOL})
+      res.status(200).send(trueOutput)
+    }
     res.status(404).send("404 NOT FOUND")
     server.close()
     process.exit()
