@@ -5,7 +5,6 @@ import minimist from 'minimist'
 const app = express();
 const args = (process.argv.slice(2))
 const port = args.port || 5000
-const server = app.listen(port)
 let trueOutput = ""
 
 //let output = roll(sides, dice, rolls)
@@ -19,21 +18,20 @@ let trueOutput = ""
     const rolls = Number(req.params.rolls) || Number(req.query.rolls) || 1
     let output = roll(sides, dice, rolls)
     trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
-    res.status(200).send(trueOutput);
+    res.status(200).send(trueOutput)
     server.close()
-    process.exit()
+    
   })
 
   app.get('/app', (req, res) => {
     res.status(200)
     server.close()
-    process.exit()
   })
 
   //app.get('/app', (req, res) => {
     
   //})
-
+  var server = app.listen(port)
 
 
   //console.log(`Server listening on port ${port}`);
