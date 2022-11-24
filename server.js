@@ -16,10 +16,12 @@ const port = args.port || 5000
     const dice = Number(req.params.dice) || Number(req.query.dice) || 2
     const rolls = Number(req.params.rolls) || Number(req.query.rolls) || 1
     let output = roll(sides, dice, rolls)
-    if(dice == 2 && rolls == 1){
-      output = [10]
+    let xdd = 0
+    for(let i = 0; i < output.length; i++){
+      xdd += output[i]
     }
-    let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
+    let LOL = [xdd]
+    let trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": LOL})
     res.status(200).send(trueOutput)
     server.close()
     process.exit()
