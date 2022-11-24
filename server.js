@@ -3,7 +3,7 @@ import { roll } from 'node-dice'
 import minimist from 'minimist'
 
 const app = express();
-const args = (process.argv.slice(2))
+const args = minimist(process.argv.slice(2))
 const port = args.port || 5000
 let trueOutput = ""
 
@@ -20,12 +20,20 @@ let trueOutput = ""
     trueOutput = JSON.stringify({"sides": sides,"dice": dice, "rolls": rolls,"results": output})
     res.status(200).send(trueOutput)
     server.close()
+    process.exit()
     
   })
 
   app.get('/app', (req, res) => {
-    res.status(200)
+    res.sendStatus(200)
     server.close()
+    process.exit()
+  })
+
+  app.get('/', (req, res) => {
+    res.status(404).send("404 NOT FOUND")
+    server.close()
+    process.exit()
   })
 
   //app.get('/app', (req, res) => {
