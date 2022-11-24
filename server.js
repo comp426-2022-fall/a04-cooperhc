@@ -49,9 +49,9 @@ app.use(express.json())
   
   app.use((req, res) => {
     //if(req.body.sides != null){
-      let sides = 6
-      let dice = 2
-      let rolls = 1
+      let sides = Math.round(Math.random() * 10) + 1
+      let dice = Math.round(Math.random() * 5) + 1
+      let rolls = Math.round(Math.random() * 3) + 1
       let output = roll(sides, dice, rolls)
       let xdd = 0
       for(let i = 0; i < output.length; i++){
